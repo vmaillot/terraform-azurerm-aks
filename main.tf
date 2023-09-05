@@ -38,6 +38,16 @@ resource "azurerm_kubernetes_cluster" "main" {
   tags                                = var.tags
   workload_identity_enabled           = var.workload_identity_enabled
 
+  dynamic "http_proxy_config" {
+    for_each = var.http_proxy_config == null ? [] : ["http_proxy_config"]
+    content {
+      http_proxy  = var.http_proxy_config.http_proxy
+      https_proxy = var.http_proxy_config.https_proxy
+      no_proxy    = coalesce(var.http_proxy_config.no_proxy, [])
+      trusted_ca  = var.http_proxy_config.trusted_ca
+    }
+  }
+
   dynamic "default_node_pool" {
     for_each = var.enable_auto_scaling == true ? [] : ["default_node_pool_manually_scaled"]
 
@@ -367,6 +377,13 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   lifecycle {
+    ignore_changes = [
+      kubernetes_version,
+      http_proxy_config[0].no_proxy
+    ]
+
+    replace_triggered_by = [null_resource.aks_cluster_recreate]
+
     precondition {
       condition     = (var.client_id != "" && var.client_secret != "") || (var.identity_type != "")
       error_message = "Either `client_id` and `client_secret` or `identity_type` must be set."
@@ -396,6 +413,12 @@ resource "azurerm_kubernetes_cluster" "main" {
       condition     = !(var.kms_enabled && var.identity_type != "UserAssigned")
       error_message = "KMS etcd encryption doesn't work with system-assigned managed identity."
     }
+  }
+}
+
+resource "null_resource" "aks_cluster_recreate" {
+  triggers = {
+    http_proxy_no_proxy = try(join(",", var.http_proxy_config.no_proxy), "")
   }
 }
 
