@@ -46,6 +46,8 @@ resource "azurerm_kubernetes_cluster" "main" {
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
   workload_identity_enabled = var.workload_identity_enabled
 
+  custom_ca_trust_certificates_base64 = ["LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUUwekNDQTd1Z0F3SUJBZ0lKQU51K21DMkp0M3VUTUEwR0NTcUdTSWIzRFFFQkN3VUFNSUdoTVFzd0NRWUQKVlFRR0V3SlZVekVUTUJFR0ExVUVDQk1LUTJGc2FXWnZjbTVwWVRFUk1BOEdBMVVFQnhNSVUyRnVJRXB2YzJVeApGVEFUQmdOVkJBb1RERnB6WTJGc1pYSWdTVzVqTGpFVk1CTUdBMVVFQ3hNTVduTmpZV3hsY2lCSmJtTXVNUmd3CkZnWURWUVFERXc5YWMyTmhiR1Z5SUZKdmIzUWdRMEV4SWpBZ0Jna3Foa2lHOXcwQkNRRVdFM04xY0hCdmNuUkEKZW5OallXeGxjaTVqYjIwd0hoY05NVFF4TWpFNU1EQXlOelUxV2hjTk5ESXdOVEEyTURBeU56VTFXakNCb1RFTApNQWtHQTFVRUJoTUNWVk14RXpBUkJnTlZCQWdUQ2tOaGJHbG1iM0p1YVdFeEVUQVBCZ05WQkFjVENGTmhiaUJLCmIzTmxNUlV3RXdZRFZRUUtFd3hhYzJOaGJHVnlJRWx1WXk0eEZUQVRCZ05WQkFzVERGcHpZMkZzWlhJZ1NXNWoKTGpFWU1CWUdBMVVFQXhNUFduTmpZV3hsY2lCU2IyOTBJRU5CTVNJd0lBWUpLb1pJaHZjTkFRa0JGaE56ZFhCdwpiM0owUUhwelkyRnNaWEl1WTI5dE1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBCnFUN1NUU3haUlRnRUZGZjZkb0hhalNjMXZrNWptem1NNkJXdU9vMDQ0RXNhVGM5ZVZFVi9IakgvMURXelp0Y3IKZlRqK25pMjA1YXBNVGxLQlczVVlSK2x5TEhROUZvWmlEWFlYSzhwb0tTVjUrVG0wVmxzLzVLYjhta2hWVnF2NwpMZ1lFbXZFWTdIUFkraTFuRUdaQ2E0NlpYQ09vaEowbUJFdEI5SlZscERJTytuTjBoVU1BWVlkWjFLWldDTU5mCjVKL2FUWmlTaHNvck4yQTM4aVNPaGRkK21jUk00aU5MM2dzTHU5OVhoS25ScUtvSGVIODNsVmRmdTFYQmVvUXoKejVWNmdBM2tiUnZoRHdvSWxUQmVNYTVsNHlSZEpBZmRwa2JGenFpd1NnTmRoYnhUSG5ZWW9yRHpLZnIyckVGTQpkc01VMERIZGVBWmY3MTErMUN1bnVRSURBUUFCbzRJQkNqQ0NBUVl3SFFZRFZSME9CQllFRkxtMzNVck53dzRNCmhwMWQzK3djQkduRlRwamZNSUhXQmdOVkhTTUVnYzR3Z2N1QUZMbTMzVXJOd3c0TWhwMWQzK3djQkduRlRwamYKb1lHbnBJR2tNSUdoTVFzd0NRWURWUVFHRXdKVlV6RVRNQkVHQTFVRUNCTUtRMkZzYVdadmNtNXBZVEVSTUE4RwpBMVVFQnhNSVUyRnVJRXB2YzJVeEZUQVRCZ05WQkFvVERGcHpZMkZzWlhJZ1NXNWpMakVWTUJNR0ExVUVDeE1NClduTmpZV3hsY2lCSmJtTXVNUmd3RmdZRFZRUURFdzlhYzJOaGJHVnlJRkp2YjNRZ1EwRXhJakFnQmdrcWhraUcKOXcwQkNRRVdFM04xY0hCdmNuUkFlbk5qWVd4bGNpNWpiMjJDQ1FEYnZwZ3RpYmQ3a3pBTUJnTlZIUk1FQlRBRApBUUgvTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFBdzBOZEpoOHczTnNKdTRLSHVWWlVybVpnSW9oblRtMGorClJUbVlROUlLQS9wdnhBY0E2SzFpL0xPK0J0K3RDWCtDMHl4cUI4cXp1bys0dkF6b1k1SkVCaHloQmhmMXVLK1AKL1dWV0ZaTi8raFRncFNiWmd6VUVuV1FHMmdPVmQyNG1zZXgrMFNyN2h5cjl2bjZPdWVIK2pqK3ZDTWlBbTUrdQprZDdsTHZKc0J1M0FPM2pHV1ZMeVBrUzNpNkdmK3J3QXAxT3NScnYzV25ia1ljRmY5eGp1YWY0ejBoUkNyTE4yCnhGTmphdnhySG1zSDhqUEhWdmdjMVZEME9wamEwbC9CUlZhdVRyVWFvVzZ0RSt3Rkc1ckVjUEdTODBqakhLNFMKcEI1aURqMm1VWkgxVDhsell0dVp5MFpQaXJ4bXRzazMxMzUrQ0tOYTJPQ0FoaEZqRTB4ZAotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="]
+
   dynamic "http_proxy_config" {
     for_each = var.http_proxy_config == null ? [] : ["http_proxy_config"]
     content {
@@ -62,6 +64,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     content {
       name                         = var.agents_pool_name
       vm_size                      = var.agents_size
+      custom_ca_trust_enabled      = true
       enable_auto_scaling          = var.enable_auto_scaling
       enable_host_encryption       = var.enable_host_encryption
       enable_node_public_ip        = var.enable_node_public_ip
@@ -162,6 +165,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     content {
       name                         = var.agents_pool_name
       vm_size                      = var.agents_size
+      custom_ca_trust_enabled      = true
       enable_auto_scaling          = var.enable_auto_scaling
       enable_host_encryption       = var.enable_host_encryption
       enable_node_public_ip        = var.enable_node_public_ip
